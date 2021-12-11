@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello GetAllCryptoController!{% endblock %}
+
+{% block body %}
+
+    <table class="table table-hover">
+        <thead>
+        <tr class="table-primary">
+            <th scope="col">Nom</th>
+            <th scope="col">Prix</th>
+            <th scope="col">24h %</th>
+            <th scope="col">7d %</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for crypto in cryptos_table.data %}
+            <tr class="table-light">
+                <th scope="row">{{ crypto.name }} <div class="text-muted">{{ crypto.symbol }}</div></th>
+                <td>{{ crypto.quote.EUR.price }} €</td>
+{#                Si le porcentage est positif#}
+                {% if  crypto.quote.EUR.percent_change_24h > 0 %}
+                    <td class="text-success">+{{ crypto.quote.EUR.percent_change_24h }} %</td>
+                {% else %}
+                    <td class="text-danger">{{ crypto.quote.EUR.percent_change_24h }} %</td>
+                {% endif %}
+                {% if  crypto.quote.EUR.percent_change_7d > 0 %}
+                    <td class="text-success">+{{ crypto.quote.EUR.percent_change_7d }} %</td>
+                {% else %}
+                    <td class="text-danger">{{ crypto.quote.EUR.percent_change_7d }} %</td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
